@@ -19,7 +19,7 @@ int _tmain(int argc, _TCHAR* argv[])
 	if (argc > 1 && wcslen(argv[1]) > 1 && argv[1][0] == '-')
 	{
 		compression_level = _wtoi(&(argv[1][1]));
-		if (compression_level == 0) compression_level = 10;
+		if (compression_level == 0 || compression_level < 0 || compression_level > 10) compression_level = 10;
 	}
 
 	auto gzip_env_path = L"%Windir%\\system32\\inetsrv\\gzip.dll";
