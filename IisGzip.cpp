@@ -15,19 +15,37 @@ void Error(const char *error, int exit_code = 1)
 int _tmain(int argc, _TCHAR* argv[])
 {
 	int compression_level = 10;
-
-	if (argc > 1 && wcslen(argv[1]) > 1 && argv[1][0] == '-')
+	HMODULE gzip = NULL;
+	
+	for (int i = 1; i < argc; i++)
 	{
-		compression_level = _wtoi(&(argv[1][1]));
-		if (compression_level == 0 || compression_level < 0 || compression_level > 10) compression_level = 10;
+		auto arg = argv[i];
+		if (wcslen(arg) > 1 && arg[0] == '-')
+		{
+			auto opt = arg[1];
+
+			if (opt >= L'1' && opt <= L'9')
+			{
+				compression_level = _wtoi(arg + 1);
+				if (compression_level < 1 || compression_level > 10) compression_level = 10;
+			}
+			else if (opt == L'd')
+			{
+				gzip = LoadLibrary(arg + 2);
+				if (gzip == NULL) Error("Error loading gzip dll");
+			}
+		}
 	}
 
-	auto gzip_env_path = L"%Windir%\\system32\\inetsrv\\gzip.dll";
-	wchar_t gzip_path[256];
-	auto path_len = ExpandEnvironmentStrings(gzip_env_path, gzip_path, 255);
-	if (path_len == 0 || path_len > 255) Error("Error expanding gzip.dll path");
-	auto gzip = LoadLibrary(gzip_path);
-	if (gzip == NULL) Error("Error loading gzip.dll");
+	if (gzip == NULL)
+	{
+		auto gzip_env_path = L"%Windir%\\system32\\inetsrv\\gzip.dll";
+		wchar_t gzip_path[256];
+		auto path_len = ExpandEnvironmentStrings(gzip_env_path, gzip_path, 255);
+		if (path_len == 0 || path_len > 255) Error("Error expanding gzip.dll path");
+		gzip = LoadLibrary(gzip_path);
+		if (gzip == NULL) Error("Error loading gzip.dll");
+	}
 
 	auto ProcInitCompression = (InitCompression)GetProcAddress(gzip, "InitCompression");
 	if (ProcInitCompression == NULL) Error("Error getting address of InitCompression()");
@@ -75,6 +93,8 @@ int _tmain(int argc, _TCHAR* argv[])
 		}
 	} 
 	while (compression_result == S_OK);
+
+	if (compression_result != S_FALSE) Error("Error compressing data");
 
 	ProcDestroyCompression(compression_context);
 	ProcDeInitCompression();
