@@ -24,10 +24,10 @@ int _tmain(int argc, _TCHAR* argv[])
 		{
 			auto opt = arg[1];
 
-			if (opt >= L'1' && opt <= L'9')
+			if (opt >= L'0' && opt <= L'9')
 			{
 				compression_level = _wtoi(arg + 1);
-				if (compression_level < 1 || compression_level > 10) compression_level = 10;
+				if (compression_level < 0 || compression_level > 10) compression_level = 10;
 			}
 			else if (opt == L'd')
 			{
