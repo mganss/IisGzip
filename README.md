@@ -2,6 +2,8 @@
 
 IisGzip is a command line wrapper around the [gzip compression library](http://msdn.microsoft.com/en-us/library/dd692872.aspx) used by Microsoft IIS.
 
+If you're looking for a way to let IIS compress content using a different compressor, check out [this other project](https://github.com/mganss/ZopfliDll).
+
 ## Usage
 
 ```
