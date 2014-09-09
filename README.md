@@ -33,7 +33,7 @@ Here's a benchmark of the different compression levels offered by the IIS gzip l
 <table>
 <tr><th>Compression Level</th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>9</th><th>10</th></tr>
 <tr><td colspan="12" align="center">jquery-1.11.1.min.js</td></tr>
-<tr><td>Compression Time (100 runs), in s</td><td>14.6</td><td>14.4</td><td>14.7</td><td>15.0</td><td>15.4</td><td>16.4</td><td>17.5</td><td>17.8</td><td>18.2</td><td>18.5</td><td>28.5</td></tr>
+<tr><td>Compression Time (1000 runs), in s</td><td>14.6</td><td>14.4</td><td>14.7</td><td>15.0</td><td>15.4</td><td>16.4</td><td>17.5</td><td>17.8</td><td>18.2</td><td>18.5</td><td>28.5</td></tr>
 <tr><td>Size (bytes)</td><td>42'748</td><td>40'949</td><td>39'437</td><td>38'451</td><td>34'383</td><td>33'662</td><td>33'349</td><td>33'311</td><td>33'293</td><td>33'293</td><td>32'358</td></tr>
 <tr><td>Savings compared to level 0</td><td></td><td>5%</td><td>8%</td><td>11%</td><td>20%</td><td>22%</td><td>22%</td><td>23%</td><td>23%</td><td>23%</td><td>25%</td></tr>
 <tr><td colspan="12" align="center">enwik8</td></tr>
